@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Slider</title>
+  <style>
+    .slider-container {
+      position: relative;
+      max-width: 5  0%;
+      margin: 0 auto;
+    }
+
+    .slider {
+      width: 50%;
+      overflow: hidden;
+      position: relative;
+      align-items: center;
+      padding-left: 400px;
+    }
+
+    .slider img {
+      width: 100%;
+      height: 90vh;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .prev-btn,
+    .next-btn {
+      position: absolute;
+      top: 30%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .prev-btn {
+      left: 60px;
+      
+    }
+
+    .next-btn {
+      right: 50px;
+    }
+  </style>
+</head>
+<body>
+<center><h1>Image Slider</h1></center>
+<div class="slider-container">
+  <button class="prev-btn"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAbFBMVEX///8AAADIyMiqqqrLy8vz8/Pv7+/29vbHx8fu7u7Ozs4ZGRkbGxvExMQQEBAoKCgUFBQJCQkvLy++vr4iIiKgoKB8fHyXl5fV1dXc3NxmZmZGRkZXV1d7e3uwsLDk5OQ1NTU8PDxubm6bm5urSD0yAAACvElEQVR4nO3dCU4jMRCF4XZYZkg6kBVotgBz/zsOAYGylIWQbEp+9X8nqNIr250oTncdAAAAAAAAAAAAAAAAAPzIsL6+vjn1rqKe4T69W6j2uExf1t61VLHTYEpT72oq2GswpT/e9RQ33W8wnXgXVNpBgik9eFdU2FGDae5dUlnHDabkXVNRh2vw/Uz0Lqokq8H06F1VQdaIpnTrXVY5ZoJKW6md4ErnwP9rNjg5866rGHtEV+oN9jojSoKtszeZngSbEfWY0ElwpJ6g/CZDgq3L7KI6m8yp+ojKr0E7wZlOg/KbjHyCrMHWyR8TdoOX6g0Kjai9yQg1OLZH9Ny7rmJIsHVBD3r9Y0JnRO0G5zoJZjaZC++6ipFfg3aCcxJsRtQEdY6JTII6DWYS1BlR+QTlN5mgCSadBIMeE0IJyn+aCJpgL78Gn8ajho033zbYvNmNeINv5sO2wcG7jKq2o7ryLqKq59y9Ah2j7s67hMoeu4l3CZUtOu8Kqut67woq6+XX4Z38XrrsxMd0Jv9MM4g/l76d99qP3q/n33x8Wj+dtGy6+xt0u8WXep+5f5/d4pXOL/FzLS70W5RK0f7OW+pvIAKkSIsK7LVIi22xB1Xopi8paiBFBXaKtNgWu0WhP/ggRQ32nRmpFDM/QdH5vXfgFIUud+VSlNpuMjuqUoqZy+qk2BT5C+vZ7UapxQApyv/TXoALewH+fCDA3e5cihEGVSlF+WtDgVMUup+YO/qlBjVAivZaFLpnGjjFpJRi5ulGKUV7UIWuY2ZTVBrUANuNffTP9L9kFHpXUG4tSr3G0kzx1buqoqy1OPEuqiyrRe+aCjPWondJpR2leO9dUXGHKQq+L/fgzTNKR/6nvRSX3tVUsdPiP+9aKrl4+OjvauRdST2b7bvVhV7QCQAAAAAAAAAAAAAAAKBZ/wFivyvQQ3T42wAAAABJRU5ErkJggg==" height="30px" alt="Image 1"></button>
+  <div class="slider">
+    <img src="https://w0.peakpx.com/wallpaper/750/658/HD-wallpaper-city-street-buildings-traffic-road-asphalt.jpg" alt="Image 1">
+  </div>
+  <button class="next-btn"><img src="https://p1.hiclipart.com/preview/984/613/169/pointers-icon-arrows-icon-right-arrow-icon-next-icon-logo-material-property-symbol-png-clipart.jpg" height="30px" alt="Image 1"></button>
+</div>
+
+<script>
+  const images = ["https://w0.peakpx.com/wallpaper/750/658/HD-wallpaper-city-street-buildings-traffic-road-asphalt.jpg", "https://images.wallpaperscraft.com/image/single/street_night_wet_155637_800x1200.jpg", "https://images.wallpaperscraft.com/image/single/city_aerial_view_road_156925_800x1200.jpg", "https://w0.peakpx.com/wallpaper/433/240/HD-wallpaper-night-city-street-buildings-skyscrapers-lights.jpg", "https://images.wallpaperscraft.com/image/single/night_city_street_skyscrapers_133350_800x1200.jpg","https://w0.peakpx.com/wallpaper/65/559/HD-wallpaper-pink-sky-in-urban-city.jpg","https://c.pxhere.com/photos/d9/63/eiffel_tower_city_tower_france_la_tour_eiffel-14942.jpg!d"];
+  let currentIndex = 0;
+  const slider = document.querySelector('.slider');
+  const prevBtn = document.querySelector('.prev-btn');
+  const nextBtn = document.querySelector('.next-btn');
+  let autoSlideInterval;
+
+  function showImage(index) {
+    slider.innerHTML = `<img src="${images[index]}" alt="Image ${index + 1}">`;
+  }
+
+  function displayFirstImage() {
+    showImage(0);
+  }
+
+  function showNextImage() {
+    currentIndex = (currentIndex + 1) % images.length;
+    showImage(currentIndex);
+  }
+
+  function showPreviousImage() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    showImage(currentIndex);
+  }
+
+  function startAutoSlide() {
+    autoSlideInterval = setInterval(showNextImage, 10000); 
+  }
+
+  function stopAutoSlide() {
+    clearInterval(autoSlideInterval);
+  }
+
+  prevBtn.addEventListener('click', () => {
+    stopAutoSlide();
+    showPreviousImage();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    stopAutoSlide();
+    showNextImage();
+  });
+
+  displayFirstImage();
+  startAutoSlide();
+</script>
+
+</body>
+</html>
